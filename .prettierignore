@@ -1,0 +1,5 @@
+src/__generated__/**/*
+.circleci
+.github
+.husky
+public
