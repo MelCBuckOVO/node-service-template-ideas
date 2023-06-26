@@ -1,9 +1,9 @@
 import { Logger, MeterRepository } from '../../types';
 
-// here: a 'fake / stub' repo (for service testing)
-export const stubbedMeterRepository = (logger: Logger): MeterRepository => {
+// here: a 'fake' repo (for service testing)
+export const fakedMeterRepository = (logger: Logger): MeterRepository => {
   const getMeterFromDb = (id: string) => {
-    logger.info('stubbed meter repository', `get-meter ${id}`);
+    logger.info('I will become a faked meter repository', `get-meter ${id}`);
 
     return {
       name: id,

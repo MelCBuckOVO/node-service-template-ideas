@@ -1,3 +1,5 @@
+import { Request as CoreRequest } from 'express-serve-static-core';
+
 // here: typing the code objects cuts down dev errors
 export type Logger = {
   error(context: string, message: string): void;
@@ -10,3 +12,18 @@ export type Logger = {
 export type MeterRepository = {
   getMeterFromDb(id: string): { name: string; fuelType: string };
 };
+
+export type RequestContext = {
+  traceToken: string;
+};
+
+export interface IRequest extends CoreRequest {
+  //keycloakAuth: KeycloakAuth;
+  //logger: Logger;
+  traceToken: string;
+  //metrics: Metrics;
+  //services: ExternalServices;
+  //CCAASAuth: CCAASAuthOptions;
+//}
+//}
+}
