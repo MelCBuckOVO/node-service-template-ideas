@@ -1,12 +1,17 @@
 import Context from 'node-execution-context';
 import * as uuid from 'uuid';
-// import { Response } from 'express-serve-static-core';
-import { IRequest } from '../types';
-export const ContextMiddleware = (req: any, _res: any, next: () => unknown) => {
-  // set some request objects into the Context
-  const { url, traceToken = uuid.v4(), method } = req as IRequest;
+import { Request, Response } from 'express-serve-static-core';
+
+export const ContextMiddleware = (req: Request, _res: Response, next: () => unknown) => {
+  // can put request objects into the Context
   // here is where the magic happens and the context is inserted
-  Context.run(next, { url, traceToken, method });
+  Context.run(next, { query: req.query, traceToken: uuid.v4() });
+};
+
+export const LocalTestContextMiddleware = (req: Request, _res: Response, next: () => unknown) => {
+  // can put request objects into the Context
+  // here is where the magic happens and the context is inserted
+  Context.run(next, { query: req.query, traceToken: uuid.v4() });
 };
 
 // export const LoggingMiddleware = (req, res, next) => {

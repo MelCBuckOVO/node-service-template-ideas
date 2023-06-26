@@ -1,18 +1,22 @@
 import { Logger } from '../../types';
 import Context from 'node-execution-context';
-import { RequestContext, IRequest } from '../../types';
+import { RequestContext } from '../../types';
+import { Request, Response } from 'express-serve-static-core';
 
 export const userApi = (logger: Logger, userService: any) => {
-  const getUserHandler = (request: IRequest, response: any) => {
+  const getUserHandler = (_request: Request, response: Response) => {
     try {
-      const { traceToken } = Context.get() as RequestContext;
-
+      const { traceToken, query } = Context.get() as RequestContext;
+      console.log(Context.get() as RequestContext);
       // here: the traceToken is showing up : )
       console.log(`traceToken: ${traceToken}`);
 
-      console.log(request.query);
+      // here: the query is showing up : )
+      console.log(`query: ${query}`);
+
       // here: the querystring is working
-      const userId = request.query.id?.toString() || '';
+      const userId = query.id?.toString() || '';
+      //const userId = request.query.id?.toString() || '';
       console.log(`user id: ${userId}`);
       logger.info('api', 'get-user');
       const user = userService.getUser(userId);
