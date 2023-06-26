@@ -8,35 +8,38 @@ import { userService } from '../src/user/userService';
 import { fakedUserRepository } from '../src/user/userRepository.fake';
 import { emailSender } from '../emailSender';
 import { logger } from '../logger';
-import axios from 'axios';
+import axios, { AxiosInstance } from 'axios';
 import { createServer, Server } from 'http';
+import { setUpLocalStorageMiddleware } from '../src/middleware'; // LoggingMiddleware
 
 const PORT = 8080;
 const baseURL = `http://localhost:${PORT}`;
+let service: Server;
+let axiosInstance: AxiosInstance;
 
 const app: ExpressApp = express();
+// here: applying asyncLocalStorage in the middleware
+app.use(setUpLocalStorageMiddleware);
 const myLogger = logger();
-
-const myMeterService = meterService(fakedMeterRepository(myLogger), myLogger);
-const myMeterApi = meterApi(myLogger, myMeterService);
 
 const myUserService = userService(fakedUserRepository(myLogger), emailSender, myLogger);
 const myUserApi = userApi(myLogger, myUserService);
 
-const axiosInstance = axios.create({
-  baseURL: baseURL,
-  headers: {
-    'Content-Type': 'application/json',
-  },
-});
+const myMeterService = meterService(fakedMeterRepository(myLogger), myLogger);
+const myMeterApi = meterApi(myLogger, myMeterService);
 
-let service: Server;
+app.get('/users', myUserApi.getUserHandler);
+app.get('/meters', myMeterApi.getMeterHandler);
+
 beforeAll(() => {
-  app.get('/meters', myMeterApi.getMeterHandler);
-  app.get('/users', myUserApi.getUserHandler);
   service = createServer(app);
-
   service.listen(PORT, () => console.log(`listening to port: ${PORT}`));
+  axiosInstance = axios.create({
+    baseURL: baseURL,
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
 });
 
 afterAll(() => {
@@ -55,6 +58,6 @@ describe('local app behavioural tests', () => {
     // http://localhost:8080/users?id=1000
     const result = await axiosInstance.get(`${baseURL}/users?id=1300`);
     expect(result.status).toBe(200);
-    expect(result.data).toStrictEqual({ name: '1300' });
+    expect(result.data).toStrictEqual({ name: '1300', email: '1300@gmail.com' });
   });
 });

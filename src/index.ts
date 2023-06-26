@@ -8,11 +8,11 @@ import { meterService } from './meter/meterService';
 import { meterRepository } from './meter/meterRepository';
 import { emailSender } from '../emailSender';
 import { logger } from '../logger';
-import { ContextMiddleware } from './middleware'; // LoggingMiddleware
+import { setUpLocalStorageMiddleware } from './middleware'; // LoggingMiddleware
 
 const app: ExpressApp = express();
-// here: applying Context in the middleware
-app.use(ContextMiddleware);
+// here: applying asyncLocalStorage in the middleware
+app.use(setUpLocalStorageMiddleware);
 
 const myLogger = logger();
 // here: looking at how the logger works

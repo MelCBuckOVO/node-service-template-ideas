@@ -1,17 +1,33 @@
-import Context from 'node-execution-context';
 import * as uuid from 'uuid';
 import { Request, Response } from 'express-serve-static-core';
+import { localStorage } from './asyncLocalStorage';
 
-export const ContextMiddleware = (req: Request, _res: Response, next: () => unknown) => {
-  // can put request objects into the Context
-  // here is where the magic happens and the context is inserted
-  Context.run(next, { query: req.query, traceToken: uuid.v4() });
+export const setUpLocalStorageMiddleware = (req: Request, _res: Response, next: () => unknown) => {
+  localStorage.run(new Map(), () => {
+    localStorage.getStore().set('traceToken', uuid.v4());
+    localStorage.getStore().set('queryString', req.query);
+
+    // todo: put logger here?
+    // todo: put external services here?
+
+    next();
+  });
 };
 
-export const LocalTestContextMiddleware = (req: Request, _res: Response, next: () => unknown) => {
-  // can put request objects into the Context
-  // here is where the magic happens and the context is inserted
-  Context.run(next, { query: req.query, traceToken: uuid.v4() });
+export const setUpLocalStorageMiddlewareForTesting = (
+  req: Request,
+  _res: Response,
+  next: () => unknown,
+) => {
+  localStorage.run(new Map(), () => {
+    localStorage.getStore().set('traceToken', uuid.v4());
+    localStorage.getStore().set('queryString', req.query);
+
+    // todo: put logger here?
+    // todo: put external services here?
+
+    next();
+  });
 };
 
 // export const LoggingMiddleware = (req, res, next) => {

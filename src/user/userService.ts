@@ -1,10 +1,10 @@
 import { Logger } from '../../types';
 
-export const userService = (repository: any, emailSender: any, logger: Logger) => {
+export const userService = (repository: any, _emailSender: any, logger: Logger) => {
   const getUser = (userName: any) => {
     logger.info('service', `get-user ${userName}`);
     const user = repository.getUserFromDb(userName);
-    emailSender.sendEmail(user.email);
+    // emailSender.sendEmail(user.email);
 
     return user;
   };
