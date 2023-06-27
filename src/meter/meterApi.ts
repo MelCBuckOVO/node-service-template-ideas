@@ -1,8 +1,8 @@
-import { Logger } from '../types';
+import { Logger, MeterService } from '../types';
 import { localStorage } from '../asyncLocalStorage';
 import { Request, Response } from 'express-serve-static-core';
 // here: returns a handler function that calls the meter service
-export const meterApi = (logger: Logger, meterService: any) => {
+export const meterApi = (logger: Logger, meterService: MeterService) => {
   const getMeterHandler = (_request: Request, response: Response) => {
     const queryString = localStorage.getStore().get('queryString');
     const traceToken = localStorage.getStore().get('traceToken');

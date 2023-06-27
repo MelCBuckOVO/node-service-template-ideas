@@ -8,5 +8,37 @@ export type Logger = {
 // e.g. a real repo for production code
 // e.g. a stubbed repo for test code
 export type MeterRepository = {
-  getMeterFromDb(id: string): { name: string; fuelType: string };
+  getMeterFromExternalService(id: string): Meter;
+};
+
+export type User = {
+  bank_name: string;
+} & UserAccount;
+
+export type UserAccount = {
+  name: string;
+  email: string;
+};
+
+export type UserFinancials = {
+  user_name: string;
+  bank_name: string;
+};
+
+export type UserRepository = {
+  getUserFromExternalService(id: string): UserAccount;
+  getUserFinancialsFromExternalService(id: string): UserFinancials;
+};
+
+export type Meter = {
+  name: string;
+  fuel_type: string;
+};
+
+export type MeterService = {
+  getMeter(id: string): Meter;
+};
+
+export type UserService = {
+  getUser(id: string): User;
 };

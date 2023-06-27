@@ -1,17 +1,17 @@
-import { Logger, MeterRepository } from '../types';
+import { Logger, Meter, MeterRepository } from '../types';
 
 // here: a real repo, for production code
 export const meterRepository = (logger: Logger): MeterRepository => {
-  const getMeterFromDb = (id: string) => {
-    logger.info('real meter repository', `get-meter ${id}`);
+  const getMeterFromExternalService = (id: string): Meter => {
+    logger.info('I will become a real meter repository', `get-meter ${id}`);
 
     return {
       name: id,
-      fuelType: 'gas',
+      fuel_type: 'gas',
     };
   };
 
   return {
-    getMeterFromDb,
+    getMeterFromExternalService,
   };
 };

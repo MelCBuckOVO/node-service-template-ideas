@@ -1,7 +1,8 @@
 import { Request, Response } from 'express-serve-static-core';
 import { localStorage } from '../asyncLocalStorage';
+import { UserService } from '../types';
 
-export const userApi = (userService: any) => {
+export const userApi = (userService: UserService) => {
   const getUserHandler = (_request: Request, response: Response) => {
     const logger = localStorage.getStore().get('logger');
     try {
@@ -26,8 +27,6 @@ export const userApi = (userService: any) => {
       throw new Error(`Error getting user: ${error.message}`);
     }
   };
-
-  // todo: make another handler here, e.g. getUsers ...
 
   return {
     getUserHandler,

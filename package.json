@@ -8,7 +8,7 @@
     "start": "yarn build && yarn nodemon",
     "build": "yarn lint && tsc -p ./tsconfig.build.json",
     "test": "jest --coverage",
-    "test:app": "jest local-endpoint-tests",
+    "test:local": "jest local-endpoint-tests",
     "test:watch": "jest --watch",
     "lint": "yarn lint:eslint",
     "lint:eslint": "eslint -c .eslintrc.json --ext .ts '{src,test-integration}/**/*.ts'",

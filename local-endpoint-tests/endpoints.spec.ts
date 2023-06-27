@@ -47,17 +47,21 @@ afterAll(() => {
 });
 
 describe('local app endpoint tests', () => {
-  it('exercises the whole service right up until the point of an external meter-service call (at which point, a fake repo is used instead)', async () => {
+  it('exercises the whole local app right up until the point of an external meter-service call (at which point, a fake repo is used instead)', async () => {
     // http://localhost:8080/meters?id=1000
     const result = await axiosInstance.get(`${baseURL}/meters?id=1200`);
     expect(result.status).toBe(200);
-    expect(result.data).toStrictEqual({ name: '1200', fuelType: 'elec' });
+    expect(result.data).toStrictEqual({ name: '1200', fuel_type: 'elec' });
   });
 
-  it('exercises the whole service right up until the point of an external user-service call (at which point, a fake repo is used instead)', async () => {
+  it('exercises the whole local app right up until the point of an external user-service call (at which point, a fake repo is used instead)', async () => {
     // http://localhost:8080/users?id=1000
     const result = await axiosInstance.get(`${baseURL}/users?id=1300`);
     expect(result.status).toBe(200);
-    expect(result.data).toStrictEqual({ name: '1300', email: '1300@gmail.com' });
+    expect(result.data).toStrictEqual({
+      name: '1300',
+      email: '1300@gmail.com',
+      bank_name: "1300's bank",
+    });
   });
 });

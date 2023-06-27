@@ -10,11 +10,3 @@ export const setUpLocalStorageMiddleware = (req: Request, _res: Response, next: 
     localStorage.getStore().set('logger', logger()), next();
   });
 };
-
-// export const LoggingMiddleware = (req, res, next) => {
-//   logger.info(`request started ${req.url}`);
-//   res.on('finish', () => {
-//     logger.info(`request finished ${req.url}`);
-//   });
-//   next();
-// };
