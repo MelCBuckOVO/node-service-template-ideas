@@ -14,10 +14,6 @@ implement tsoa
 
 services will get their conn strings from \_env config
 
-extend userApi to contain > 1 method
-
-write tests to prove this implementation of AsyncLocalStorage is thread-safe
-
 ### inspired by
 
 https://github.com/EduardBargues/content-functional-dependency-injection-in-nodejs/tree/main/nodejs-functional-di

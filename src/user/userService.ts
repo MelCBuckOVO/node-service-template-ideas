@@ -10,11 +10,7 @@ export const userService = (repository: UserRepository, emailSender: any): UserS
 
     emailSender.sendEmail(userAccount.email);
 
-    return {
-      name: userAccount.name,
-      email: userAccount.email,
-      bank_name: userFinancials.bank_name,
-    };
+    return { ...userAccount, bank_name: userFinancials.bank_name };
   };
 
   return {
