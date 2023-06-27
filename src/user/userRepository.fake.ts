@@ -2,10 +2,10 @@ import { localStorage } from '../asyncLocalStorage';
 import { UserAccount, UserFinancials, UserRepository } from '../types';
 // here: a 'fake' repo (so the app can run locally; so its endpoints can be tested)
 export const fakedUserRepository = (): UserRepository => {
-  const getUserFromExternalService = (userName: any): UserAccount => {
+  const getUserAccountFromExternalService = (userName: any): UserAccount => {
     const logger = localStorage.getStore().get('logger');
 
-    logger.info('I will become a faked user repository', `get-user ${userName}`);
+    logger.info('I will become a faked user account repository', `get-user ${userName}`);
 
     return {
       name: userName,
@@ -24,7 +24,7 @@ export const fakedUserRepository = (): UserRepository => {
   };
 
   return {
-    getUserFromExternalService,
+    getUserAccountFromExternalService,
     getUserFinancialsFromExternalService,
   };
 };

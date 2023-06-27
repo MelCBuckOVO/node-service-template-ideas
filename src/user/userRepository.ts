@@ -2,9 +2,9 @@ import { localStorage } from '../asyncLocalStorage';
 import { UserAccount, UserFinancials, UserRepository } from '../types';
 
 export const userRepository = (): UserRepository => {
-  const getUserFromExternalService = (userName: string): UserAccount => {
+  const getUserAccountFromExternalService = (userName: string): UserAccount => {
     const logger = localStorage.getStore().get('logger');
-    logger.info('I will become a real user repository', `get-user ${userName}`);
+    logger.info('I will become a real user account repository', `get-user ${userName}`);
 
     return {
       name: userName,
@@ -23,7 +23,7 @@ export const userRepository = (): UserRepository => {
   };
 
   return {
-    getUserFromExternalService,
+    getUserAccountFromExternalService,
     getUserFinancialsFromExternalService,
   };
 };

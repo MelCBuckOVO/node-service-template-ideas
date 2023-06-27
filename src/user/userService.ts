@@ -5,7 +5,7 @@ export const userService = (repository: UserRepository, emailSender: any): UserS
     const logger = localStorage.getStore().get('logger');
 
     logger.info('service', `get-user ${userName}`);
-    const userAccount = repository.getUserFromExternalService(userName);
+    const userAccount = repository.getUserAccountFromExternalService(userName);
     const userFinancials = repository.getUserFinancialsFromExternalService(userName);
 
     emailSender.sendEmail(userAccount.email);

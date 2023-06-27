@@ -26,7 +26,7 @@ export type UserFinancials = {
 };
 
 export type UserRepository = {
-  getUserFromExternalService(id: string): UserAccount;
+  getUserAccountFromExternalService(id: string): UserAccount;
   getUserFinancialsFromExternalService(id: string): UserFinancials;
 };
 
