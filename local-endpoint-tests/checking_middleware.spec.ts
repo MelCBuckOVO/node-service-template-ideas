@@ -12,7 +12,7 @@ import { emailSender } from '../src/emailSender';
 import { logger } from '../src/logger';
 import axios, { AxiosInstance } from 'axios';
 import { createServer, Server } from 'http';
-import { setUpLocalStorageMiddleware } from '../src/middleware'; // LoggingMiddleware
+import { setUpLocalStorageMiddleware } from '../src/middleware';
 
 const PORT = 8081;
 const baseURL = `http://localhost:${PORT}`;
