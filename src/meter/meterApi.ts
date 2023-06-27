@@ -1,4 +1,4 @@
-import { Logger } from '../../types';
+import { Logger } from '../types';
 import { localStorage } from '../asyncLocalStorage';
 import { Request, Response } from 'express-serve-static-core';
 // here: returns a handler function that calls the meter service

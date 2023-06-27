@@ -1,9 +1,9 @@
-import { Logger } from '../../types';
 import { Request, Response } from 'express-serve-static-core';
 import { localStorage } from '../asyncLocalStorage';
 
-export const userApi = (logger: Logger, userService: any) => {
+export const userApi = (userService: any) => {
   const getUserHandler = (_request: Request, response: Response) => {
+    const logger = localStorage.getStore().get('logger');
     try {
       const queryString = localStorage.getStore().get('queryString');
       const traceToken = localStorage.getStore().get('traceToken');
@@ -22,9 +22,12 @@ export const userApi = (logger: Logger, userService: any) => {
       const user = userService.getUser(userId);
       response.json(user);
     } catch (error) {
+      logger.error(`Error in userApi: ${error.message}`);
       throw new Error(`Error getting user: ${error.message}`);
     }
   };
+
+  // todo: make another handler here, e.g. getUsers ...
 
   return {
     getUserHandler,

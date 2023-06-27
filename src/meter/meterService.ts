@@ -1,4 +1,4 @@
-import { Logger } from '../../types';
+import { Logger } from '../types';
 
 // here: returns a function that calls the repo
 export const meterService = (repository: any, logger: Logger) => {

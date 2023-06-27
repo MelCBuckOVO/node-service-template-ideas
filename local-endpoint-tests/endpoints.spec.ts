@@ -6,8 +6,8 @@ import { fakedMeterRepository } from '../src/meter/meterRepository.fake';
 import { userApi } from '../src/user/userApi';
 import { userService } from '../src/user/userService';
 import { fakedUserRepository } from '../src/user/userRepository.fake';
-import { emailSender } from '../emailSender';
-import { logger } from '../logger';
+import { emailSender } from '../src/emailSender';
+import { logger } from '../src/logger';
 import axios, { AxiosInstance } from 'axios';
 import { createServer, Server } from 'http';
 import { setUpLocalStorageMiddleware } from '../src/middleware'; // LoggingMiddleware
@@ -22,8 +22,8 @@ const app: ExpressApp = express();
 app.use(setUpLocalStorageMiddleware);
 const myLogger = logger();
 
-const myUserService = userService(fakedUserRepository(myLogger), emailSender, myLogger);
-const myUserApi = userApi(myLogger, myUserService);
+const myUserService = userService(fakedUserRepository(), emailSender());
+const myUserApi = userApi(myUserService);
 
 const myMeterService = meterService(fakedMeterRepository(myLogger), myLogger);
 const myMeterApi = meterApi(myLogger, myMeterService);
@@ -46,15 +46,15 @@ afterAll(() => {
   service.close();
 });
 
-describe('local app behavioural tests', () => {
-  it('exercises the whole service right up until the point of an external meter-service call (at which point, a fake is used instead)', async () => {
+describe('local app endpoint tests', () => {
+  it('exercises the whole service right up until the point of an external meter-service call (at which point, a fake repo is used instead)', async () => {
     // http://localhost:8080/meters?id=1000
     const result = await axiosInstance.get(`${baseURL}/meters?id=1200`);
     expect(result.status).toBe(200);
     expect(result.data).toStrictEqual({ name: '1200', fuelType: 'elec' });
   });
 
-  it('exercises the whole service right up until the point of an external user-service call (at which point, a fake is used instead)', async () => {
+  it('exercises the whole service right up until the point of an external user-service call (at which point, a fake repo is used instead)', async () => {
     // http://localhost:8080/users?id=1000
     const result = await axiosInstance.get(`${baseURL}/users?id=1300`);
     expect(result.status).toBe(200);

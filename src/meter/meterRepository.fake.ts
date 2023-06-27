@@ -1,4 +1,4 @@
-import { Logger, MeterRepository } from '../../types';
+import { Logger, MeterRepository } from '../types';
 
 // here: a 'fake' repo (for service testing)
 export const fakedMeterRepository = (logger: Logger): MeterRepository => {

@@ -1,4 +1,4 @@
-import { Logger, MeterRepository } from '../../types';
+import { Logger, MeterRepository } from '../types';
 
 // here: a real repo, for production code
 export const meterRepository = (logger: Logger): MeterRepository => {

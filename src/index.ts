@@ -6,25 +6,20 @@ import { userRepository } from './user/userRepository';
 import { meterApi } from './meter/meterApi';
 import { meterService } from './meter/meterService';
 import { meterRepository } from './meter/meterRepository';
-import { emailSender } from '../emailSender';
-import { logger } from '../logger';
+import { emailSender } from './emailSender';
+import { logger } from './logger';
 import { setUpLocalStorageMiddleware } from './middleware'; // LoggingMiddleware
 
 const app: ExpressApp = express();
 // here: applying asyncLocalStorage in the middleware
 app.use(setUpLocalStorageMiddleware);
 
+// here: imagine these are external services e.g. customer, smets2 ...
+// here: myUserService is using the middleware logger
+const myUserService = userService(userRepository(), emailSender());
+const myUserApi = userApi(myUserService);
+
 const myLogger = logger();
-// here: looking at how the logger works
-console.log('error: ' + myLogger.error);
-console.log('info: ' + myLogger.info);
-myLogger.info('x', 'y');
-myLogger.error('a', 'b');
-
-// here: imagine these are external services ...
-const myUserService = userService(userRepository(myLogger), emailSender(myLogger), myLogger);
-const myUserApi = userApi(myLogger, myUserService);
-
 const myMeterService = meterService(meterRepository(myLogger), myLogger);
 const myMeterApi = meterApi(myLogger, myMeterService);
 

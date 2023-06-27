@@ -1,7 +1,8 @@
-import { Logger } from '../../types';
-export const userRepository = (logger: Logger) => {
+import { localStorage } from '../asyncLocalStorage';
+export const userRepository = () => {
   const getUserFromDb = (userName: any) => {
-    logger.info('repository', `get-user ${userName}`);
+    const logger = localStorage.getStore().get('logger');
+    logger.info('real user repository', `get-user ${userName}`);
 
     return {
       name: userName,

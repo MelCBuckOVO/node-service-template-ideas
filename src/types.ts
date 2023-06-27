@@ -10,8 +10,3 @@ export type Logger = {
 export type MeterRepository = {
   getMeterFromDb(id: string): { name: string; fuelType: string };
 };
-
-export type RequestContext = {
-  traceToken: string;
-  query: { id: string };
-};
